@@ -1,0 +1,38 @@
+.search {
+   position: relative;
+}
+
+.input {
+   width: 100%;
+   height: 100%;
+   padding-right: 45px;
+}
+
+.searchBtn {
+   position: absolute;
+   top: 0;
+   right: 0;
+   height: 100%;
+   width: 40px;
+   border: none;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   background-color: #FFFFFF;
+}
+
+.searchBtn:not([disabled]):hover .searchBtn_icon{
+   transform: scale(1.1);
+   transition: .1s;
+   opacity: 1;
+}
+
+.searchBtn:disabled {
+   opacity: .3;
+}
+
+.searchBtn_icon {
+   height: 50%;
+   opacity: .5;
+}

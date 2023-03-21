@@ -1,0 +1,9 @@
+.input {
+   padding: 10px;
+   box-sizing: border-box;
+   border: none;
+   outline: none;
+   font-family: 'Roboto', sans-serif;
+   font-size: 18px;
+   color: #3d3d3d;
+}
