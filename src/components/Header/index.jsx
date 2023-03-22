@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setCategory, setSort } from '../../redux/slices/booksSlice' 
+import { setCategory, setSort } from '../../redux/slices/sortSlice' 
 import Search from '../Search'
-import DropDown from '../DropDown'
+import DropDown from '../../UI/DropDown'
 import style from './index.module.css'
 
 const Header = () => {
    const dispatch = useDispatch()
-   const { sort, category } = useSelector(state => state.booksSlice)
+   const { sort, category } = useSelector(state => state.sortSlice)
    
    return(
       <header className={style.header}>

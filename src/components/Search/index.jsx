@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
+import { getBooks, setBooks, setBooksArray } from '../../redux/slices/booksSlice'
 import Input from '../../UI/Input'
 import style from './index.module.css'
 
 const Search = ({className, placeholder}) => {
+   const dispatch = useDispatch()
    const [searchValue, setSearchValue] = useState('')
    const [err, setErr] = useState(null)
 
@@ -13,13 +16,17 @@ const Search = ({className, placeholder}) => {
       }
    },[searchValue])
 
-   const validationInput = () => {
+   const validationInput = async() => {
+
       if(searchValue){
-         console.log(searchValue)
+         dispatch(setBooks(null))
+         dispatch(setBooksArray([]))
+         await dispatch(getBooks([searchValue]))
       }
       else {
          setErr('Enter a request')
       }
+
    }
 
    const handleKeyDown = (e) => {
