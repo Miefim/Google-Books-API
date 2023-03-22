@@ -8,6 +8,10 @@
    padding-right: 45px;
 }
 
+.inputErr {
+   background-color: #ffaaaa;
+}
+
 .searchBtn {
    position: absolute;
    top: 0;
@@ -35,4 +39,13 @@
 .searchBtn_icon {
    height: 50%;
    opacity: .5;
+}
+
+.err {
+   position: absolute;
+   right: 50px;
+   top: 11px;
+   font-weight: 900;
+   font-size: 15px;
+   color: #cf0000;
 }

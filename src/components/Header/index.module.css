@@ -49,3 +49,43 @@
    z-index: 10;
    width: 280px;
 }
+
+@media screen and (max-width: 1000px) {
+   
+   .header {
+      width: 100vw;
+      margin-top: 0;
+   }
+
+   .sortsLine {
+      width: 100%;
+      justify-content: space-around;
+   }
+
+}
+
+@media screen and (max-width: 600px) {
+
+   .header {
+      height: 250px;
+   }
+
+   .categoriesBlock {
+      flex-direction: column;
+   }
+
+   .search {
+      width: 100%;
+   }
+
+}
+
+@media screen and (max-width: 400px) {
+   .dropDown {
+      width: 150px;
+   }
+
+   .title {
+      font-size: 35px;
+   }
+}
