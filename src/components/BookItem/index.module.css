@@ -40,9 +40,21 @@
    padding: 10px;
    box-sizing: border-box;
    width: 100%;
-   height: 200px;
+   min-height: 200px;
+   max-height: 250px;
+   overflow: auto;
    border: 1px solid #a7a7a7;
    color: #000000;
+}
+
+.descriptionBlock_description::-webkit-scrollbar {
+   background-color: rgba(0, 0, 0, 0);
+   width: 5px;
+}
+
+.descriptionBlock_description::-webkit-scrollbar-thumb {
+   background-color: #b1b1b1;
+   border-radius: 10px;
 }
 
 .backBtn {

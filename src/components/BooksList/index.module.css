@@ -4,6 +4,25 @@
    width: 1000px;
 }
 
+.infoBlock {
+   display: flex;
+   flex-direction: column;
+   height: calc(100vh - 230px);
+   justify-content: center;
+   align-items: center;
+   background-color: #f4f4f4;
+}
+
+.infoBlock_icon {
+   width: 100px;
+}
+
+.infoBlock_img {
+   width: 50%;
+   border-radius: 20px;
+   box-shadow: 5px 5px 5px #00000050;
+}
+
 .foundsRes {
    display: flex;
    justify-content: center;
@@ -14,9 +33,9 @@
 
 .conteinerCards {
    display: flex;
-   justify-content: space-between;
    flex-wrap: wrap;
-   width: 100%;
+   width: 960px;
+   margin: 0 auto;
 }
 
 .card {
@@ -48,12 +67,13 @@
    height: 35%;
    padding: 5px 10px;
    color: #a7a7a7;
-   font-weight: 100;
+   font-weight: 400;
    font-size: 13px;
 }
 
 .description_category {
    text-decoration: underline;
+   min-height: 15px;
 }
 
 .description_title {
@@ -62,13 +82,28 @@
    color: #000000;
    font-size: 14px;
    max-height: 35px;
+   min-height: 17px;
    overflow: hidden;
 }
 
 .description_author {
    margin-top: 5px;
    max-height: 30px;
+   min-height: 15px;
    overflow: hidden;
+}
+
+.moreBtn {
+   margin: 20px 0;
+   padding: 30px 0;
+   font-size: 18px;
+   font-weight: 900;
+   background-color: #ededed;
+   height: 86px;
+}
+
+.loader {
+   width: 30px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -76,6 +111,15 @@
    .booksList {
       width: 100vw;
       align-items: center;
+   }
+
+   .infoBlock {
+      height: calc(100vh - 250px);
+      width: 100%;
+   }
+
+   .moreBtn {
+      width: 100%;
    }
 
 }

@@ -3,7 +3,6 @@ import style from './index.module.css'
 
 const DropDown = ({children, className, selected, setSelected}) => {
    const [isOpen, setIsOpen] = useState(false)
-   // const [selected, setSelected] = useState(0)
 
    return(
       <div className={`${style.dropDown} ${className}`} onClick={() => setIsOpen(!isOpen)}>

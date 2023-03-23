@@ -41,6 +41,19 @@
    opacity: .5;
 }
 
+.clearBtn {
+   position: absolute;
+   top: 13px;
+   right: 45px;
+   height: 15px;
+   box-shadow: none;
+   transition: .1s;
+}
+
+.clearBtn:hover {
+   transform: scale(1.1);
+}
+
 .err {
    position: absolute;
    right: 50px;
