@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { getBooks, setBooks, setBooksArray } from '../../redux/slices/booksSlice'
+import { setSearchValue } from '../../redux/slices/searchSlice'
 import Input from '../../UI/Input'
 import style from './index.module.css'
 
 const Search = ({className, placeholder}) => {
    const dispatch = useDispatch()
-   const [searchValue, setSearchValue] = useState('')
-   const [err, setErr] = useState(null)
+   const { searchValue } = useSelector(state => state.searchSlice)
+   const [ debounce, setDebounce ] = useState(true)
+   const [ err, setErr ] = useState(null)
 
    useEffect(() => {
       if(err){
@@ -16,14 +18,19 @@ const Search = ({className, placeholder}) => {
       }
    },[searchValue])
 
-   const validationInput = async() => {
+   useEffect(() => {
+      setTimeout(() => {setDebounce(true)}, 2000)
+   },[debounce])
 
-      if(searchValue){
+   const validationInput = () => {
+
+      if(searchValue && debounce){
+         setDebounce(false)
          dispatch(setBooks(null))
          dispatch(setBooksArray([]))
-         await dispatch(getBooks([searchValue]))
+         dispatch(getBooks([searchValue]))
       }
-      else {
+      else if(!searchValue){
          setErr('Enter a request')
       }
 
@@ -41,7 +48,7 @@ const Search = ({className, placeholder}) => {
          <Input 
             className={`${style.input} ${err && style.inputErr}`} 
             placeholder={placeholder || 'Search'}
-            setValue={setSearchValue}
+            setValue={(prop) => dispatch(setSearchValue(prop))}
             value={searchValue}
             onKeyDown={handleKeyDown}
          />
@@ -52,6 +59,7 @@ const Search = ({className, placeholder}) => {
          >
             <img className={style.searchBtn_icon} src="/images/search.png" alt="" />
          </button>
+         {searchValue && <img className={style.clearBtn} src="/images/close.png" alt="" onClick={() => dispatch(setSearchValue(''))}/>} 
       </div>
    )
 }

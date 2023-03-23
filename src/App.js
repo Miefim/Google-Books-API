@@ -9,7 +9,6 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<MainPage />} />
     <Route path="/:id" element={<BookItemPage />} />
   </>
-  
 ))
 
 function App() {
