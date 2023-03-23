@@ -9,31 +9,39 @@ import style from './index.module.css'
 const Search = ({className, placeholder}) => {
    const dispatch = useDispatch()
    const { searchValue } = useSelector(state => state.searchSlice)
+   const { isLoading } = useSelector(state => state.booksSlice)
    const [ debounce, setDebounce ] = useState(true)
+   const [ localValue, setLocalValue ] = useState('')
    const [ err, setErr ] = useState(null)
 
    useEffect(() => {
       if(err){
          setErr(null)
       }
-   },[searchValue])
+   },[localValue])
+
+   useEffect(() => {
+      if(!localValue && localValue !== searchValue){
+         setLocalValue(searchValue)
+      }
+   },[isLoading])
 
    useEffect(() => {
       setTimeout(() => {setDebounce(true)}, 2000)
    },[debounce])
 
    const validationInput = () => {
-
-      if(searchValue && debounce){
+      const localValueTrim = localValue.trim()
+      if(localValueTrim && debounce){
          setDebounce(false)
+         dispatch(setSearchValue(localValue))
          dispatch(setBooks(null))
          dispatch(setBooksArray([]))
-         dispatch(getBooks([searchValue]))
+         dispatch(getBooks([localValue]))
       }
-      else if(!searchValue){
+      else if(!localValueTrim){
          setErr('Enter a request')
       }
-
    }
 
    const handleKeyDown = (e) => {
@@ -48,18 +56,18 @@ const Search = ({className, placeholder}) => {
          <Input 
             className={`${style.input} ${err && style.inputErr}`} 
             placeholder={placeholder || 'Search'}
-            setValue={(prop) => dispatch(setSearchValue(prop))}
-            value={searchValue}
+            setValue={setLocalValue}
+            value={localValue}
             onKeyDown={handleKeyDown}
          />
          <button 
             className={style.searchBtn} 
             onClick={validationInput}
-            disabled={!searchValue}
+            disabled={!localValue || err}
          >
             <img className={style.searchBtn_icon} src="/images/search.png" alt="" />
          </button>
-         {searchValue && <img className={style.clearBtn} src="/images/close.png" alt="" onClick={() => dispatch(setSearchValue(''))}/>} 
+         {localValue.trim() && <img className={style.clearBtn} src="/images/close.png" alt="" onClick={() => setLocalValue('')}/>} 
       </div>
    )
 }

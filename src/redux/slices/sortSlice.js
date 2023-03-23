@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-   category: 0,
-   sort: 0,
+   category: 'all',
+   sort: 'relevance',
 }
 
 export const sortSlice = createSlice({

@@ -34,6 +34,8 @@ const Header = () => {
       window.addEventListener('scroll', handleScroll)
    },[])
 
+   console.log(sort)
+
    return(
       <header className={style.header}>
          <h1 className={style.title}>Search for books</h1>

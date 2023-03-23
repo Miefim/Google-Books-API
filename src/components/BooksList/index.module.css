@@ -114,7 +114,7 @@
    }
 
    .infoBlock {
-      height: calc(100vh - 250px);
+      height: calc(100vh - 200px);
       width: 100%;
    }
 
@@ -136,6 +136,14 @@
 
    .conteinerCards {
       width: 480px;
+   }
+
+}
+
+@media screen and (max-width: 600px) {
+
+   .infoBlock {
+      height: calc(100vh - 250px);
    }
 
 }
