@@ -2,38 +2,46 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getBooks, setBooks, setBooksArray } from '../../redux/slices/booksSlice'
-import { setSearchValue } from '../../redux/slices/searchSlice'
+import { setSearchValue, setErr } from '../../redux/slices/searchSlice'
 import Input from '../../UI/Input'
 import style from './index.module.css'
 
 const Search = ({className, placeholder}) => {
    const dispatch = useDispatch()
-   const { searchValue } = useSelector(state => state.searchSlice)
+   const { searchValue, err } = useSelector(state => state.searchSlice)
+   const { isLoading } = useSelector(state => state.booksSlice)
+   const { category, sort } = useSelector(state => state.sortSlice)
    const [ debounce, setDebounce ] = useState(true)
-   const [ err, setErr ] = useState(null)
+   const [ localValue, setLocalValue ] = useState('')
 
    useEffect(() => {
       if(err){
-         setErr(null)
+         dispatch(setErr(null))
       }
-   },[searchValue])
+   },[localValue])
+
+   useEffect(() => {
+      if(!localValue || localValue !== searchValue){
+         setLocalValue(searchValue)
+      }
+   },[isLoading])
 
    useEffect(() => {
       setTimeout(() => {setDebounce(true)}, 2000)
    },[debounce])
 
    const validationInput = () => {
-
-      if(searchValue && debounce){
+      const localValueTrim = localValue.trim()
+      if(localValueTrim && debounce){
          setDebounce(false)
+         dispatch(setSearchValue(localValue))
          dispatch(setBooks(null))
          dispatch(setBooksArray([]))
-         dispatch(getBooks([searchValue]))
+         dispatch(getBooks([localValue, , category, sort]))
       }
-      else if(!searchValue){
-         setErr('Enter a request')
+      else if(!localValueTrim){
+         dispatch(setErr('Enter a request'))
       }
-
    }
 
    const handleKeyDown = (e) => {
@@ -48,18 +56,18 @@ const Search = ({className, placeholder}) => {
          <Input 
             className={`${style.input} ${err && style.inputErr}`} 
             placeholder={placeholder || 'Search'}
-            setValue={(prop) => dispatch(setSearchValue(prop))}
-            value={searchValue}
+            setValue={setLocalValue}
+            value={localValue}
             onKeyDown={handleKeyDown}
          />
          <button 
             className={style.searchBtn} 
             onClick={validationInput}
-            disabled={!searchValue}
+            disabled={!localValue || err}
          >
             <img className={style.searchBtn_icon} src="/images/search.png" alt="" />
          </button>
-         {searchValue && <img className={style.clearBtn} src="/images/close.png" alt="" onClick={() => dispatch(setSearchValue(''))}/>} 
+         {localValue.trim() && <img className={style.clearBtn} src="/images/close.png" alt="" onClick={() => setLocalValue('')}/>} 
       </div>
    )
 }

@@ -11,6 +11,8 @@ import style from './index.module.css'
 const BooksList = () => {
    const { scroll } = useSelector(state => state.scrollSlice)
    const { books, booksArray, isLoading, error } = useSelector(state => state.booksSlice)
+   const { searchValue } = useSelector(state => state.searchSlice)
+   const { sort, category } = useSelector(state => state.sortSlice)
    const dispatch = useDispatch()
    const nav = useNavigate()
 
@@ -26,7 +28,7 @@ const BooksList = () => {
    
    const handleMoreBtn = () => {
       if(books.items.length === 30){
-         dispatch(getBooks([, booksArray.length]))
+         dispatch(getBooks([searchValue, booksArray.length, category, sort]))
       }  
    } 
 
@@ -62,7 +64,7 @@ const BooksList = () => {
          <div className={style.conteinerCards}>
             {  
                booksArray?.map(book => 
-                  <div id={book.id} className={style.card} onClick={(e) => hadleCardClick(e, book)} key={book.id}>
+                  <div id={book.id} className={style.card} onClick={(e) => hadleCardClick(e, book)} key={`${book.id}${Math.random()}`}>
                      <div className={style.card_imgBlock}>
                         <img className={style.imgBlock_img} src={book.volumeInfo.imageLinks?.thumbnail ? book.volumeInfo.imageLinks?.thumbnail : '/images/bookImg.jpg'} alt=""/>  
                      </div>
