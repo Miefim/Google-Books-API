@@ -1,0 +1,24 @@
+.categoriesBlock {
+   font-weight: 400;
+   color: #FFFFFF;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   z-index: 10;
+   width: 280px;
+}
+
+@media screen and (max-width: 600px) {
+
+   .categoriesBlock {
+      flex-direction: column;
+   }
+
+}
+
+@media screen and (max-width: 400px) {
+   .dropDown {
+      width: 150px;
+   }
+}
+

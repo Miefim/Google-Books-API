@@ -12,6 +12,7 @@ const BooksList = () => {
    const { scroll } = useSelector(state => state.scrollSlice)
    const { books, booksArray, isLoading, error } = useSelector(state => state.booksSlice)
    const { searchValue } = useSelector(state => state.searchSlice)
+   const { sort, category } = useSelector(state => state.sortSlice)
    const dispatch = useDispatch()
    const nav = useNavigate()
 
@@ -27,7 +28,7 @@ const BooksList = () => {
    
    const handleMoreBtn = () => {
       if(books.items.length === 30){
-         dispatch(getBooks([searchValue, booksArray.length]))
+         dispatch(getBooks([searchValue, booksArray.length, category, sort]))
       }  
    } 
 

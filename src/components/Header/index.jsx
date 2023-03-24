@@ -1,17 +1,16 @@
-import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { setCategory, setSort } from '../../redux/slices/sortSlice'
+import Sort from '../Sort'
+import Category from '../Category'
 import Button from '../../UI/Button' 
 import Search from '../Search'
-import DropDown from '../../UI/DropDown'
 import style from './index.module.css'
 
 const Header = () => {
-   const dispatch = useDispatch()
-   const { sort, category } = useSelector(state => state.sortSlice)
    const params = useParams()
+   const searchValue = useSelector(state => state.searchSlice.searchValue)
    const [isVisibleBtnUp, setIsVisibleBtnUp] = useState(false)
 
    const handleUpButton = () => {
@@ -34,47 +33,20 @@ const Header = () => {
       window.addEventListener('scroll', handleScroll)
    },[])
 
-   console.log(sort)
-
    return(
       <header className={style.header}>
          <h1 className={style.title}>Search for books</h1>
          {!params.hasOwnProperty('id') && <Search className={style.search} placeholder={'Search books'}/>}
          {!params.hasOwnProperty('id') &&
-            <div className={style.sortsLine}>
-               <div className={style.categoriesBlock}>
-                  Categories
-                  <DropDown 
-                     className={style.dropDown} 
-                     selected={category} 
-                     setSelected={(prop) => dispatch(setCategory(prop))}
-                  >
-                     <div>all</div>
-                     <div>art</div>
-                     <div>biography</div>
-                     <div>computers</div>
-                     <div>history</div>
-                     <div>medical</div>
-                     <div>poetry</div>
-                  </DropDown>
-               </div>
-               <div className={style.categoriesBlock}>
-                  Sorting by
-                  <DropDown 
-                     className={style.dropDown}
-                     selected={sort} 
-                     setSelected={(prop) => dispatch(setSort(prop))}
-                  >
-                     <div>relevance</div>
-                     <div>newest</div>
-                  </DropDown>
-               </div>
+            <div className={`${style.sortsLine} ${!searchValue && style.noActive}`}>
+               <Category/>
+               <Sort/>
             </div>
          }
          {isVisibleBtnUp &&
             <Button className={style.upBtn} onClick={handleUpButton}>
-            <img className={style.upBtn_icon} src="/images/leftArrow.png" alt="" />
-         </Button>}
+               <img className={style.upBtn_icon} src="/images/leftArrow.png" alt="" />
+            </Button>}
       </header>
    )
 }

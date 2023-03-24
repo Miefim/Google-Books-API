@@ -2,26 +2,26 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getBooks, setBooks, setBooksArray } from '../../redux/slices/booksSlice'
-import { setSearchValue } from '../../redux/slices/searchSlice'
+import { setSearchValue, setErr } from '../../redux/slices/searchSlice'
 import Input from '../../UI/Input'
 import style from './index.module.css'
 
 const Search = ({className, placeholder}) => {
    const dispatch = useDispatch()
-   const { searchValue } = useSelector(state => state.searchSlice)
+   const { searchValue, err } = useSelector(state => state.searchSlice)
    const { isLoading } = useSelector(state => state.booksSlice)
+   const { category, sort } = useSelector(state => state.sortSlice)
    const [ debounce, setDebounce ] = useState(true)
    const [ localValue, setLocalValue ] = useState('')
-   const [ err, setErr ] = useState(null)
 
    useEffect(() => {
       if(err){
-         setErr(null)
+         dispatch(setErr(null))
       }
    },[localValue])
 
    useEffect(() => {
-      if(!localValue && localValue !== searchValue){
+      if(!localValue || localValue !== searchValue){
          setLocalValue(searchValue)
       }
    },[isLoading])
@@ -37,10 +37,10 @@ const Search = ({className, placeholder}) => {
          dispatch(setSearchValue(localValue))
          dispatch(setBooks(null))
          dispatch(setBooksArray([]))
-         dispatch(getBooks([localValue]))
+         dispatch(getBooks([localValue, , category, sort]))
       }
       else if(!localValueTrim){
-         setErr('Enter a request')
+         dispatch(setErr('Enter a request'))
       }
    }
 

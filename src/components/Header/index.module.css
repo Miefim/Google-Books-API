@@ -40,16 +40,6 @@
    justify-content: space-between;
 }
 
-.categoriesBlock {
-   font-weight: 400;
-   color: #FFFFFF;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   z-index: 10;
-   width: 280px;
-}
-
 .upBtn {
    position: fixed;
    right: 10%;
@@ -61,6 +51,12 @@
 .upBtn_icon {
    width: 20px;
    transform: rotate(90deg);
+}
+
+.noActive {
+   opacity: .4;
+   z-index: 10;
+   pointer-events: none;
 }
 
 @media screen and (max-width: 1300px) {
@@ -107,22 +103,16 @@
       height: 250px;
    }
 
-   .categoriesBlock {
-      flex-direction: column;
-   }
-
    .search {
-      width: 100%;
+      width: 90%;
    }
 
 }
 
 @media screen and (max-width: 400px) {
-   .dropDown {
-      width: 150px;
-   }
 
    .title {
       font-size: 35px;
    }
+
 }
