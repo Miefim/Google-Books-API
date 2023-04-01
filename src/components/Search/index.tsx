@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { getBooks, setBooks, setBooksArray } from '../../redux/slices/booksSlice'
-import { setSearchValue, setErr } from '../../redux/slices/searchSlice'
+import { useAppDispatch } from '../../redux/store'
+import { getBooks, setBooks, setBooksArray, booksSelector } from '../../redux/slices/booksSlice'
+import { setSearchValue, setErr, searchSelector } from '../../redux/slices/searchSlice'
+import { sortSelector } from '../../redux/slices/sortSlice'
 import Input from '../../UI/Input'
 import style from './index.module.css'
 
-const Search = ({className, placeholder}) => {
-   const dispatch = useDispatch()
-   const { searchValue, err } = useSelector(state => state.searchSlice)
-   const { isLoading } = useSelector(state => state.booksSlice)
-   const { category, sort } = useSelector(state => state.sortSlice)
-   const [ debounce, setDebounce ] = useState(true)
-   const [ localValue, setLocalValue ] = useState('')
+type SearchProps = {
+   className?: string,
+   placeholder?: string
+}
+
+const Search: React.FC<SearchProps> = ({className, placeholder}) => {
+   const dispatch = useAppDispatch()
+   const { searchValue, err } = useSelector(searchSelector)
+   const { isLoading } = useSelector(booksSelector)
+   const { category, sort } = useSelector(sortSelector)
+   const [ debounce, setDebounce ] = useState<boolean>(true)
+   const [ localValue, setLocalValue ] = useState<string>('')
 
    useEffect(() => {
       if(err){
@@ -44,7 +51,7 @@ const Search = ({className, placeholder}) => {
       }
    }
 
-   const handleKeyDown = (e) => {
+   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if(e.key === 'Enter'){
          validationInput() 
       }
@@ -63,7 +70,7 @@ const Search = ({className, placeholder}) => {
          <button 
             className={style.searchBtn} 
             onClick={validationInput}
-            disabled={!localValue || err}
+            disabled={Boolean(!localValue || err)}
          >
             <img className={style.searchBtn_icon} src="/images/search.png" alt="" />
          </button>

@@ -41,7 +41,7 @@ type BookOptions = {
    title?: string
 }
 
-type Book = {
+export type Book = {
    id: string
    volumeInfo: BookOptions
 }

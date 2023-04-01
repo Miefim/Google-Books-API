@@ -1,7 +1,7 @@
 import Header from "../components/Header"
 import BooksList from "../components/BooksList"
 
-const MainPage = () => {
+const MainPage: React.FC = () => {
    return(
       <>
          <Header/>       

@@ -1,20 +1,22 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { setBooks, setBooksArray, getBooks } from '../../redux/slices/booksSlice'
-import { setSort } from '../../redux/slices/sortSlice'
+import { setSort, sortSelector } from '../../redux/slices/sortSlice'
+import { searchSelector } from '../../redux/slices/searchSlice' 
+import { useAppDispatch } from '../../redux/store'
 import DropDown from '../../UI/DropDown'
 import style from './index.module.css'
 
-const Sort = () => {
-   const dispatch = useDispatch()
-   const { sort, category } = useSelector(state => state.sortSlice)
-   const { searchValue } = useSelector(state => state.searchSlice)
+const Sort: React.FC = () => {
+   const dispatch = useAppDispatch()
+   const { sort, category } = useSelector(sortSelector)
+   const { searchValue } = useSelector(searchSelector)
 
-   const handleSelected = (prop) => {
-      dispatch(setSort(prop))
+   const handleSelected = (sort: string) => {
+      dispatch(setSort(sort))
       dispatch(setBooks(null))
       dispatch(setBooksArray([]))
-      dispatch(getBooks([searchValue, category, prop]))
+      dispatch(getBooks([searchValue, category, sort]))
    }
 
    return(
