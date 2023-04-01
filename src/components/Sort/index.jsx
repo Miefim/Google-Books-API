@@ -14,7 +14,7 @@ const Sort = () => {
       dispatch(setSort(prop))
       dispatch(setBooks(null))
       dispatch(setBooksArray([]))
-      dispatch(getBooks([searchValue, , category, prop]))
+      dispatch(getBooks([searchValue, category, prop]))
    }
 
    return(

@@ -16,6 +16,9 @@ const BooksList = () => {
    const dispatch = useDispatch()
    const nav = useNavigate()
 
+   console.log(booksArray)
+
+
    useEffect(() => {
       window.scrollTo(0, scroll)
    },[])
@@ -28,7 +31,7 @@ const BooksList = () => {
    
    const handleMoreBtn = () => {
       if(books.items.length === 30){
-         dispatch(getBooks([searchValue, booksArray.length, category, sort]))
+         dispatch(getBooks([searchValue, category, sort, booksArray.length]))
       }  
    } 
 

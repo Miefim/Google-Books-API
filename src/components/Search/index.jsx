@@ -37,7 +37,7 @@ const Search = ({className, placeholder}) => {
          dispatch(setSearchValue(localValue))
          dispatch(setBooks(null))
          dispatch(setBooksArray([]))
-         dispatch(getBooks([localValue, , category, sort]))
+         dispatch(getBooks([localValue, category, sort]))
       }
       else if(!localValueTrim){
          dispatch(setErr('Enter a request'))
