@@ -1,34 +1,39 @@
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
+import { scrollSelector } from '../../redux/slices/scrollSlice'
+import { searchSelector } from '../../redux/slices/searchSlice'
+import { sortSelector } from '../../redux/slices/sortSlice'
+import { useAppDispatch } from '../../redux/store'
 import { setScroll } from '../../redux/slices/scrollSlice'
-import { getBooks, setSelectedBook } from '../../redux/slices/booksSlice'
+import { Book, booksSelector, getBooks, setSelectedBook } from '../../redux/slices/booksSlice'
 import Loader from '../../UI/Loader'
 import Button from '../../UI/Button'
 import style from './index.module.css'
 
-const BooksList = () => {
-   const { scroll } = useSelector(state => state.scrollSlice)
-   const { books, booksArray, isLoading, error } = useSelector(state => state.booksSlice)
-   const { searchValue } = useSelector(state => state.searchSlice)
-   const { sort, category } = useSelector(state => state.sortSlice)
-   const dispatch = useDispatch()
+
+const BooksList: React.FC = () => {
+   const { scroll } = useSelector(scrollSelector)
+   const { books, booksArray, isLoading, error } = useSelector(booksSelector)
+   const { searchValue } = useSelector(searchSelector)
+   const { sort, category } = useSelector(sortSelector)
+   const dispatch = useAppDispatch()
    const nav = useNavigate()
 
    useEffect(() => {
       window.scrollTo(0, scroll)
    },[])
 
-   const hadleCardClick = (e, book) => {
+   const hadleCardClick = (e:React.MouseEvent<HTMLDivElement>, book:Book) => {
       dispatch(setSelectedBook(book))
       dispatch(setScroll(window.scrollY))
       nav(`/${e.currentTarget.id}`)
    } 
    
    const handleMoreBtn = () => {
-      if(books.items.length === 30){
-         dispatch(getBooks([searchValue, booksArray.length, category, sort]))
+      if(books?.items.length === 30){
+         dispatch(getBooks([searchValue, category, sort, booksArray.length]))
       }  
    } 
 

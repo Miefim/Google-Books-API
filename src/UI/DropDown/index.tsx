@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import style from './index.module.css'
 
-const DropDown = ({children, className, selected, setSelected}) => {
-   const [isOpen, setIsOpen] = useState(false)
+type DropDownProps = {
+   children: JSX.Element[]
+   className?: string
+   selected: string
+   setSelected: (arg: string) => void
+}
+
+const DropDown: React.FC<DropDownProps> = ({children, className, selected, setSelected}) => {
+   const [isOpen, setIsOpen] = useState<boolean>(false)
 
    return(
       <div className={`${style.dropDown} ${className}`} onClick={() => setIsOpen(!isOpen)}>

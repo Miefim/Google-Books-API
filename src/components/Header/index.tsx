@@ -2,15 +2,16 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import { searchSelector } from '../../redux/slices/searchSlice'
 import Sort from '../Sort'
 import Category from '../Category'
 import Button from '../../UI/Button' 
 import Search from '../Search'
 import style from './index.module.css'
 
-const Header = () => {
+const Header: React.FC = () => {
    const params = useParams()
-   const searchValue = useSelector(state => state.searchSlice.searchValue)
+   const { searchValue } = useSelector(searchSelector)
    const [isVisibleBtnUp, setIsVisibleBtnUp] = useState(false)
 
    const handleUpButton = () => {
